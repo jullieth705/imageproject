@@ -1,0 +1,15 @@
+{% include './header.html' %}
+
+{% block content %}
+<div class="container">
+
+    <h2 class="my-4">Última imagen cargada</h2>
+    <div class="row d-flex justify-content-center">
+        <div class = "{{image.orientation}}">
+            <img src="{{image.source.url}}" />
+        </div>
+    </div>
+    <br>
+</div>
+
+{% endblock %}

@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from .models import ImageResource
 
 class NewUserForm(UserCreationForm):
 	email = forms.EmailField(required=True)
@@ -15,3 +16,13 @@ class NewUserForm(UserCreationForm):
 		if commit:
 			user.save()
 		return user
+
+
+class ImageForm(forms.ModelForm):
+    source = forms.ImageField(required=True, label="Imagen")
+    name = forms.CharField(required=True, max_length=100, label="Nombre de la imagen")
+
+    class Meta:
+        model = ImageResource
+        fields = ('source','name',)
+

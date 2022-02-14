@@ -1,0 +1,34 @@
+{% include "./header.html" %}
+
+{% block content %}  
+
+{% load crispy_forms_tags %}
+   
+        <div class="container">
+
+          <!--Simple Form-->
+          <h2 class="my-4">Agrega una nueva imágen</h2>
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form|crispy }}
+
+                <button class="btn btn-success" type="submit">Cargar</button>
+          </form>
+          {% include 'bootstrap4/layout/help_text_and_errors.html' %}
+
+          <!--Django Model-->
+            <h2 class="my-4">Lista de imágenes</h2>
+            <div class="row">
+            {% for m in images %}
+            <div class="col-lg-4 col-md-6 col-sm-12 pb-4">
+                <div class="card h-100 p-4">
+                <img src="{{ m.source.url }}" class="card-img-top">
+                </div>
+            </div>
+            {% empty %}
+            <p>No hay imágenes almacenadas.</p>
+            {% endfor %}
+            </div>
+        </div>
+    
+{% endblock %}

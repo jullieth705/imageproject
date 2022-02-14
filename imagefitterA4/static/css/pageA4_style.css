@@ -1,0 +1,11 @@
+.horizontal{
+    background: lightgray;
+    width: 1123px;
+    height: 796px;
+}
+
+.vertical{
+    background: lightgray;
+    width: 796px;
+    height: 1123px;
+}
