@@ -19,8 +19,8 @@ class NewUserForm(UserCreationForm):
 
 
 class ImageForm(forms.ModelForm):
-    source = forms.ImageField(required=True, label="Imagen")
     name = forms.CharField(required=True, max_length=100, label="Nombre de la imagen")
+    source = forms.ImageField(required=True, label="Imagen")
 
     class Meta:
         model = ImageResource

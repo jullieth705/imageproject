@@ -9,3 +9,4 @@ class ImageResource(models.Model):
     name = models.CharField(max_length=100)
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=False)
     orientation = models.CharField(max_length=20)
+    dimensions = models.CharField(max_length=20)
