@@ -22,7 +22,7 @@ def galery(request):
 	images = ImageResource.objects.filter(user=request.user)
 	return render(request=request, template_name='./galery.html', context={'images':images}) 
 
-@require_http_methods(["GET", "POST"])
+@require_http_methods(['GET', 'POST'])
 def register_request(request):
 	if request.method == 'POST':
 		form = NewUserForm(request.POST)
@@ -35,7 +35,7 @@ def register_request(request):
 	form = NewUserForm()
 	return render (request=request, template_name='./register.html', context={'register_form':form})
 
-@require_http_methods(["GET", "POST"])
+@require_http_methods(['GET', 'POST'])
 def login_request(request):
 	if request.method == 'POST':
 		form = AuthenticationForm(request, data=request.POST)
@@ -80,7 +80,7 @@ def fit_image(source):
 		'dimensions': str(image.width)+ 'X' + str(image.height)}
 	return source_details
 
-@require_http_methods(["GET", "POST"])
+@require_http_methods(['GET', 'POST'])
 @login_required
 def upload(request):
 	if request.method == 'POST':
