@@ -7,7 +7,7 @@ from .models import ImageResource
 from PIL import Image
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_safe, require_POST, require_GET
+from django.views.decorators.http import require_safe, require_http_methods
 
 HOME_URL = 'imagefitterA4:home' 
 
@@ -22,6 +22,7 @@ def galery(request):
 	images = ImageResource.objects.filter(user=request.user)
 	return render(request=request, template_name='./galery.html', context={'images':images}) 
 
+@require_http_methods(["GET", "POST"])
 def register_request(request):
 	if request.method == 'POST':
 		form = NewUserForm(request.POST)
@@ -34,6 +35,7 @@ def register_request(request):
 	form = NewUserForm()
 	return render (request=request, template_name='./register.html', context={'register_form':form})
 
+@require_http_methods(["GET", "POST"])
 def login_request(request):
 	if request.method == 'POST':
 		form = AuthenticationForm(request, data=request.POST)
@@ -44,11 +46,8 @@ def login_request(request):
 			if user is not None:
 				login(request, user)
 				messages.info(request, f'Has iniciado sesión como {username}.')
-				try:
-					if request.GET['next']:
-						return redirect(request.GET['next'])
-				except Exception:
-					return redirect(HOME_URL)
+				URL = request.GET['next'] if 'next' in request.GET else HOME_URL
+				return redirect(URL)
 			else:
 				messages.error(request,'Usuario o contraseña incorrectos.')
 		else:
@@ -81,7 +80,7 @@ def fit_image(source):
 		'dimensions': str(image.width)+ 'X' + str(image.height)}
 	return source_details
 
-@require_safe
+@require_http_methods(["GET", "POST"])
 @login_required
 def upload(request):
 	if request.method == 'POST':

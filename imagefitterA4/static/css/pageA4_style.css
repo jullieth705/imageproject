@@ -1,11 +1,103 @@
+
 .horizontal{
-    background: lightgray;
-    width: 1123px;
-    height: 796px;
+    background: lightgray; 
+    width: 336.9px;
+    height: 238.8px;
+}
+
+.horizontal > img{
+    transform: scale(0.3);
+    transform-origin: 0 0;
 }
 
 .vertical{
-    background: lightgray;
-    width: 796px;
-    height: 1123px;
+    background: lightgray; 
+    width: 318.4px;
+    height: 449.2px;
+}
+
+.vertical > img{
+    transform: scale(0.4);
+    transform-origin: 0 0;
+}
+
+@media screen and (min-width: 576px) {
+    .horizontal{
+        width: 449.2px;
+        height: 318.4px;
+    }
+
+    .horizontal > img{
+        transform: scale(0.3);
+    }
+
+    .vertical{
+        width: 477.6px;
+        height: 673.8px;
+    }
+
+    .vertical > img{
+        transform: scale(0.6);
+    }
+}
+
+@media screen and  (min-width: 768px) {
+    .horizontal{
+        width: 673.8px;
+        height: 477.6px;
+    }
+
+    .horizontal > img{
+        transform: scale(0.6);
+    }
+    
+    .vertical{
+        width: 716.4px;
+        height: 1010.7px;
+    }
+
+    .vertical > img{
+        transform: scale(0.9);
+    }
+
+}
+
+@media screen and  (min-width: 992px) {
+    .horizontal{
+        width: 898.4px;
+        height: 636.8px;
+    }
+
+    .horizontal > img{
+        transform: scale(0.8);
+    }
+    
+    .vertical{
+        width: 796px;
+        height: 1123px;
+    }
+
+    .vertical > img{
+        transform: scale(1);
+    }
+}
+
+@media (min-width: 1200px) {
+    .horizontal{
+        width: 1123px;
+        height: 796px;
+    }
+
+    .horizontal > img{
+        transform: scale(1);
+    }
+    
+    .vertical{
+        width: 796px;
+        height: 1123px;
+    }
+
+    .vertical > img{
+        transform: scale(1);
+    }
 }
