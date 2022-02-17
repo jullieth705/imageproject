@@ -63,21 +63,25 @@ def logout_request(request):
 
 def fit_image(source):
 	image = Image.open(source)
-	height = image.height
-	width = image.width
-
-	dimensions_a4 = { 
-		'vertical' :{'height' : 1123, 'width' : 796},
-		'horizontal' : {'height' : 796, 'width' : 1123}
-	}
-	orientation = 'vertical' if (height >= width) else'horizontal'
-	if (height > dimensions_a4[orientation]['height'] or width > dimensions_a4[orientation]['width']):
-		image.thumbnail([dimensions_a4[orientation]['width'], dimensions_a4[orientation]['height']], Image.ANTIALIAS)	
-	image.save(settings.MEDIA_URL[1:] + settings.IMAGE_URL + str(source))  
-	source_details = { 
-		'path' : settings.IMAGE_URL + str(source),
-		'orientation': orientation,
-		'dimensions': str(image.width)+ 'X' + str(image.height)}
+	if image.format == "JPEG" or image.format == "JPG":
+		height = image.height
+		width = image.width
+		dimensions_a4 = { 
+			'vertical' :{'height' : 1123, 'width' : 796},
+			'horizontal' : {'height' : 796, 'width' : 1123}
+		}
+		orientation = 'vertical' if (height >= width) else'horizontal'
+		if (height > dimensions_a4[orientation]['height'] or width > dimensions_a4[orientation]['width']):
+			image.thumbnail([dimensions_a4[orientation]['width'], dimensions_a4[orientation]['height']], Image.ANTIALIAS)	
+		image.save(settings.MEDIA_URL[1:] + settings.IMAGE_URL + str(source))  
+		source_details = { 
+			'path' : settings.IMAGE_URL + str(source),
+			'orientation': orientation,
+			'dimensions': str(image.width)+ 'X' + str(image.height)}
+		# return source_details
+	else:
+		print("******* error******")
+		source_details = {'error' : 'Formato no valido.'}
 	return source_details
 
 @require_http_methods(['GET', 'POST'])
@@ -88,13 +92,18 @@ def upload(request):
 		if form.is_valid():
 			temp_form = form.save(commit=False)
 			source_details = fit_image(temp_form.source)
-			temp_form.source = source_details['path']
-			temp_form.orientation = source_details['orientation']
-			temp_form.dimensions = source_details['dimensions']
-			temp_form.user = request.user
-			temp_form.save()
-			image = ImageResource.objects.filter(user=request.user).last()
-			return redirect('imagefitterA4:view', pk=image.pk)
+			if 'error' in source_details:
+				messages.error(request,source_details['error'])
+			else:
+				temp_form.source = source_details['path']
+				temp_form.orientation = source_details['orientation']
+				temp_form.dimensions = source_details['dimensions']
+				temp_form.user = request.user
+				temp_form.save()
+				image = ImageResource.objects.filter(user=request.user).last()
+				return redirect('imagefitterA4:view', pk=image.pk)
+		else:
+			messages.error(request,'Formato no valido.')
 		return redirect('imagefitterA4:upload')
 	form = ImageForm()
 	images = ImageResource.objects.filter(user=request.user)
