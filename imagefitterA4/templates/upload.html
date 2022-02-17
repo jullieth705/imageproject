@@ -1,10 +1,15 @@
 {% include "./header.html" %}
 
 {% block content %}  
-
-{% load crispy_forms_tags %}
-   
-        <div class="container form py-3">
+    {% load crispy_forms_tags %}
+    <div class="container py-3">
+        <nav aria-label="breadcrumb py-2">
+            <ol class="breadcrumb ">
+              <li class="breadcrumb-item"><a href="/">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Cargar imagen</li>
+            </ol>
+        </nav>
+        <div class="container form">
             <div class="card bg-light rounded">
                 <div class="card-body">
                     <h2 class="my-4 text-center">Carga una imagen</h2>
@@ -17,5 +22,5 @@
                 </div>
             </div>
         </div>
-    
+    </div>
 {% endblock %}

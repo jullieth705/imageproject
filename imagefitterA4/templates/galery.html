@@ -2,13 +2,19 @@
 
 {% block content %}
     <div class="container py-3">
+        <nav aria-label="breadcrumb py-2">
+            <ol class="breadcrumb ">
+              <li class="breadcrumb-item"><a href="/">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Galería</li>
+            </ol>
+        </nav>
         <h2 class="my-4 text-center">Galería de imágenes</h2>
         <div class="row">
             {% for m in images %}
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 pb-2">
-                <div class="card p-2 text-center mx-auto bg-light align-items-center" style="width: 15rem; height:15rem;">
-                    <a href="/images/{{ m.id }}" style="height:100%; width:100%;display:flex;justify-content: center; align-items: center;">
-                        <img src="{{ m.source.url }}" class="img-thumbnail bg-light" style="max-height:100%" alt="{{ m.name}}" >
+                <div class="card p-2 text-center mx-auto bg-light align-items-center card-size">
+                    <a href="/images/{{ m.id }}" class="card-link align-items-center">
+                        <img src="{{ m.source.url }}" class="img-thumbnail" alt="{{ m.name}}" >
                     </a>
                 </div>
                 <ul class="list-group list-group-flush">

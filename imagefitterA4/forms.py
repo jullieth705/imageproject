@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from .models import ImageResource
 
@@ -17,6 +17,8 @@ class NewUserForm(UserCreationForm):
 			user.save()
 		return user
 
+class LoginUserForm(AuthenticationForm):
+    username = forms.CharField(required=True, label="Usuario")
 
 class ImageForm(forms.ModelForm):
     name = forms.CharField(required=True, max_length=100, label="Nombre de la imagen")

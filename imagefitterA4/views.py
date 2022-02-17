@@ -1,8 +1,8 @@
 from django.shortcuts import  render, redirect
-from .forms import NewUserForm, ImageForm
+from .forms import NewUserForm, ImageForm, LoginUserForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
-from django.contrib.auth.forms import AuthenticationForm 
+from django.contrib.auth.forms import AuthenticationForm
 from .models import ImageResource
 from PIL import Image
 from django.conf import settings
@@ -52,7 +52,7 @@ def login_request(request):
 				messages.error(request,'Usuario o contraseña incorrectos.')
 		else:
 			messages.error(request,'Usuario o contraseña incorrectos.')
-	form = AuthenticationForm()
+	form = LoginUserForm()
 	return render(request=request, template_name='./login.html', context={'login_form':form})
 
 @require_safe
