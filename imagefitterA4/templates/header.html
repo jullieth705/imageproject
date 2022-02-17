@@ -4,15 +4,18 @@
 {% block content %}
 <header>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+    <div class="container-fluid">
     <a class="navbar-brand" href="#"> 
-        <img src="{%static '/img/icono.png'%}" width="30" height="30" class="d-inline-block align-top" alt="">
+        <img src="{%static '/img/icono.png'%}" width="30" height="30" class="d-inline-block align-top" alt="icono">
         Image Fitter APP
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="False" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+    {% if user.is_authenticated %}
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav ml-auto">
+    {% endif %}
+    <div class="collapse navbar-collapse" id="navbarMenu">
+      <ul class="navbar-nav ms-auto">
         {% if user.is_authenticated %}
         <li class="nav-item p-2">
             <a class="nav-link" href="/upload">Cargar imagen</a>
@@ -26,16 +29,11 @@
         <li class="nav-item p-2">
             <a class="btn btn-outline-light" href="/accounts/logout">Cerrar sesión</a>
         </li>
-  
-        {% else %}
-  
-        <li class="nav-item">
-          <a class="nav-link" href="/accounts/login">Login</a>
-        </li>
-  
         {% endif %}
       </ul>
     </div>
+    </div>
   </nav>
 </header>
-  {% endblock %}
+{% include './messages.html' %}
+{% endblock %}

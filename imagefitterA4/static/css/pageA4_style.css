@@ -1,6 +1,7 @@
 
 .horizontal{
     background: lightgray; 
+    padding: 0;
     width: 336.9px;
     height: 238.8px;
 }
@@ -12,6 +13,7 @@
 
 .vertical{
     background: lightgray; 
+    padding: 0;
     width: 318.4px;
     height: 449.2px;
 }
@@ -100,4 +102,13 @@
     .vertical > img{
         transform: scale(1);
     }
+}
+
+
+.form{
+    max-width: 500px;
+}
+
+.full-width{
+    width: 100%;
 }
