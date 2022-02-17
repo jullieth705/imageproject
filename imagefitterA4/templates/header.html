@@ -1,0 +1,41 @@
+{% extends "./base.html" %}
+
+{%load static %}
+{% block content %}
+<header>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+    <a class="navbar-brand" href="#"> 
+        <img src={% static "/img/icono_header.png" %} width="30" height="30" class="d-inline-block align-top" alt="">
+        Image Fitter APP
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="False" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav ml-auto">
+        {% if user.is_authenticated %}
+        <li class="nav-item p-2">
+            <a class="nav-link" href="/upload">Cargar imagen</a>
+        </li>
+        <li class="nav-item p-2">
+            <a class="nav-link" href="/galery">Ver galería</a>
+        </li>
+        <li class="nav-item p-2">
+            <a class="nav-link" href="/upload">Acerca de</a>
+        </li>
+        <li class="nav-item p-2">
+            <a class="btn btn-outline-light" href="/accounts/logout">Cerrar sesión</a>
+        </li>
+  
+        {% else %}
+  
+        <li class="nav-item">
+          <a class="nav-link" href="/accounts/login">Login</a>
+        </li>
+  
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
+</header>
+  {% endblock %}

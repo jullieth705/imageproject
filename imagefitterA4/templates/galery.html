@@ -1,0 +1,28 @@
+{% include "./header.html" %}
+
+{% block content %}
+    <div class="container py-3">
+        <h2 class="my-4 text-center">Galería de imágenes</h2>
+        <div class="row">
+            {% for m in images %}
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-2 ">
+                <div class="card p-2 text-center mx-auto bg-light align-items-center" style="width: 15rem; height:15rem;">
+                    <a href="/images/{{ m.id }}" style="height:100%; width:100%;display:flex;justify-content: center; align-items: center;">
+                        <img src="{{ m.source.url }}" class="img-thumbnail bg-light" style="max-height:100%" alt="{{ m.name}}" >
+                    </a>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item text-center bg-light">
+                        <a href="/images/{{ m.id }}" class="text-dark">
+                            <p style="margin:0;"><strong>{{ m.name }}</strong></p>
+                            <p style="margin:0;">{{ m.orientation }} - {{ m.dimensions }}</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            {% empty %}
+            <p>No hay imágenes almacenadas.</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

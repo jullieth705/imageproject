@@ -1,0 +1,14 @@
+{% include './header.html' %}
+
+{% block content %}
+<div class="container">
+    <h2 class="my-4 text-center">Visualizador de imágenes formato A4</h2>
+    <div class="row d-flex justify-content-center">
+        <div class ="{{image.orientation}}">
+            <img src="{{image.source.url}}" alt="{{image.name}}"/>
+        </div>
+    </div>
+    <br>
+</div>
+
+{% endblock %}
