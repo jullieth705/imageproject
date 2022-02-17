@@ -78,10 +78,8 @@ def fit_image(source):
 			'path' : settings.IMAGE_URL + str(source),
 			'orientation': orientation,
 			'dimensions': str(image.width)+ 'X' + str(image.height)}
-		# return source_details
 	else:
-		print("******* error******")
-		source_details = {'error' : 'Formato no valido.'}
+		source_details = {'error' : f'El archivo se encuentra corrupto o tiene un formato invalido. Las extensiones permitidas son: jpeg, jpg.'}
 	return source_details
 
 @require_http_methods(['GET', 'POST'])
@@ -89,21 +87,27 @@ def fit_image(source):
 def upload(request):
 	if request.method == 'POST':
 		form = ImageForm(request.POST, request.FILES)
+		files = request.FILES.getlist('source')
+		images = []
 		if form.is_valid():
 			temp_form = form.save(commit=False)
-			source_details = fit_image(temp_form.source)
-			if 'error' in source_details:
-				messages.error(request,source_details['error'])
-			else:
-				temp_form.source = source_details['path']
-				temp_form.orientation = source_details['orientation']
-				temp_form.dimensions = source_details['dimensions']
-				temp_form.user = request.user
-				temp_form.save()
-				image = ImageResource.objects.filter(user=request.user).last()
-				return redirect('imagefitterA4:view', pk=image.pk)
+			for f in files:
+				source_details = fit_image(f)
+				if 'error' in source_details:
+					messages.error(request,source_details['error'])
+				else:
+					temp_form.source = source_details['path']
+					temp_form.orientation = source_details['orientation']
+					temp_form.dimensions = source_details['dimensions']
+					temp_form.user = request.user
+					temp_form.save()
+					images.append(ImageResource.objects.filter(user=request.user).last())
+			if len(images) == 1:	
+				return redirect('imagefitterA4:view', pk=images[0].pk)
+			elif len(images) > 1:
+				return render(request=request, template_name='./galery.html', context={'images':images})
 		else:
-			messages.error(request,'Formato no valido.')
+			messages.error(request,'Los archivos ingresados deben ser de tipo imagen. Las extensiones permitidas son: jpeg, jpg.')
 		return redirect('imagefitterA4:upload')
 	form = ImageForm()
 	images = ImageResource.objects.filter(user=request.user)

@@ -22,7 +22,7 @@ class LoginUserForm(AuthenticationForm):
 
 class ImageForm(forms.ModelForm):
     name = forms.CharField(required=True, max_length=100, label="Nombre de la imagen")
-    source = forms.ImageField(required=True, label="Imagen")
+    source = forms.ImageField(required=True, label="Imagen", widget=forms.ClearableFileInput(attrs={'multiple': True}))
 
     class Meta:
         model = ImageResource
