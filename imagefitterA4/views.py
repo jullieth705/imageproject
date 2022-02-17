@@ -102,7 +102,6 @@ def upload(request):
 				if 'error' in source_details:
 					messages.error(request,source_details['error'])
 				else:
-					# name = base_name if number_file == 0 else base_name + ' (' + str(number_file) + ')'
 					name = source_details['name']
 					source = source_details['path']
 					orientation = source_details['orientation']
