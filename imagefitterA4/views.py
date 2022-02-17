@@ -59,7 +59,7 @@ def login_request(request):
 def logout_request(request):
 	logout(request)
 	messages.info(request, 'Has cerrado sesión exitosamente.') 
-	return redirect(HOME_URL)
+	return redirect('imagefitterA4:login')
 
 def fit_image(source, name, number_file):
 	image = Image.open(source)
@@ -75,8 +75,6 @@ def fit_image(source, name, number_file):
 			image.thumbnail([dimensions_a4[orientation]['width'], dimensions_a4[orientation]['height']], Image.ANTIALIAS)	
 		name = name if number_file == 0 else name + ' (' + str(number_file) + ')'
 		filename = name + '.'+ image.format.lower()
-		print(name)
-		print("******")
 		image.save(settings.MEDIA_URL[1:] + settings.IMAGE_URL + filename)  
 		
 		source_details = { 
