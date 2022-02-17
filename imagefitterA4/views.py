@@ -61,7 +61,7 @@ def logout_request(request):
 	messages.info(request, 'Has cerrado sesión exitosamente.') 
 	return redirect(HOME_URL)
 
-def fit_image(source):
+def fit_image(source, name, number_file):
 	image = Image.open(source)
 	if image.format == "JPEG" or image.format == "JPG":
 		height = image.height
@@ -73,11 +73,17 @@ def fit_image(source):
 		orientation = 'vertical' if (height >= width) else'horizontal'
 		if (height > dimensions_a4[orientation]['height'] or width > dimensions_a4[orientation]['width']):
 			image.thumbnail([dimensions_a4[orientation]['width'], dimensions_a4[orientation]['height']], Image.ANTIALIAS)	
-		image.save(settings.MEDIA_URL[1:] + settings.IMAGE_URL + str(source))  
+		name = name if number_file == 0 else name + ' (' + str(number_file) + ')'
+		filename = name + '.'+ image.format.lower()
+		print(name)
+		print("******")
+		image.save(settings.MEDIA_URL[1:] + settings.IMAGE_URL + filename)  
+		
 		source_details = { 
-			'path' : settings.IMAGE_URL + str(source),
+			'path' : settings.IMAGE_URL + filename,
 			'orientation': orientation,
-			'dimensions': str(image.width)+ 'X' + str(image.height)}
+			'dimensions': str(image.width)+ 'X' + str(image.height),
+			'name': name}
 	else:
 		source_details = {'error' : f'El archivo se encuentra corrupto o tiene un formato invalido. Las extensiones permitidas son: jpeg, jpg.'}
 	return source_details
@@ -91,21 +97,25 @@ def upload(request):
 		images = []
 		if form.is_valid():
 			temp_form = form.save(commit=False)
-			for f in files:
-				source_details = fit_image(f)
+			number_file = 0
+			for file in files:
+				source_details = fit_image(file, temp_form.name, number_file)
+				number_file += 1
 				if 'error' in source_details:
 					messages.error(request,source_details['error'])
 				else:
-					temp_form.source = source_details['path']
-					temp_form.orientation = source_details['orientation']
-					temp_form.dimensions = source_details['dimensions']
-					temp_form.user = request.user
-					temp_form.save()
+					# name = base_name if number_file == 0 else base_name + ' (' + str(number_file) + ')'
+					name = source_details['name']
+					source = source_details['path']
+					orientation = source_details['orientation']
+					dimensions = source_details['dimensions']
+					user = request.user
+					ImageResource.objects.create(name = name, source=source, orientation=orientation, dimensions=dimensions, user = user)
 					images.append(ImageResource.objects.filter(user=request.user).last())
 			if len(images) == 1:	
 				return redirect('imagefitterA4:view', pk=images[0].pk)
 			elif len(images) > 1:
-				return render(request=request, template_name='./galery.html', context={'images':images})
+				return render(request=request, template_name='./galery_preview.html', context={'images':images})
 		else:
 			messages.error(request,'Los archivos ingresados deben ser de tipo imagen. Las extensiones permitidas son: jpeg, jpg.')
 		return redirect('imagefitterA4:upload')
@@ -117,5 +127,5 @@ def upload(request):
 @login_required
 def view(request, pk):
 	image = ImageResource.objects.filter(user=request.user).get(pk=pk)
-	return render(request=request, template_name='./pageA4.html', context={'image':image})
+	return render(request=request, template_name='./page_a4.html', context={'image':image})
    
