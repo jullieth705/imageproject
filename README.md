@@ -175,5 +175,5 @@ Para lograr el efecto responsive de la aplicación se realiza un escalado tanto 
 
 ## Autor
 
-Erika Julliet Osorio Estrada
-jullieth9111@gmail.com
+* Erika Julliet Osorio Estrada
+* jullieth9111@gmail.com
