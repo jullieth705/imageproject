@@ -66,14 +66,15 @@ Revisando el "code smell" reportado por la herramienta, se puede ver que es nece
 ### Responsive
 Gracias al uso de Boostrap se logra un diseño adaptativo usando elementos  como navbar y grid. Adicionalmente para definir el tamaño y la orientación de la hoja de referencia para mostrar la imagen, se hace uso de media queries teniendo como puntos de salto, los definidos por Boostrap para los diferentes dispositivos.
 
-Adaptación usando navbar:
+*Adaptación usando navbar:
 
 ![menu](readme_img/menu.png "Menú responsive")
 
-Adaptación usando los media queries:
+*Adaptación usando los media queries:
 
 ![page_a4_responsive](readme_img/page_a4_responsive.png "Página formato A4")
 
-Adaptación usando grid (clases .col):
+*Adaptación usando grid (clases .col):
+
 ![galery](readme_img/galery.png "Galería responsive")
 ## Aspectos no funcionales 
