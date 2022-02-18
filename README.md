@@ -1,4 +1,4 @@
-d# Proyecto imageproject - prueba técnica imágenes en formato A4
+# Proyecto imageproject - prueba técnica imágenes en formato A4
 
 Aplicativo encargado de recibir imágenes en formato JPG de cualquier dimensión (Ancho x alto) para ajustarlas a una hoja de hoja tamaño A4 (796 x 1123 pixeles) sin márgenes. Se cumple con las siguientes reglas:
 * La orientación de la página es definida a partir de la orientación de la imagen (Horizontal/Vertical).
@@ -73,8 +73,16 @@ Revisando el "code smell" reportado por la herramienta, se puede ver que es nece
 	<img src="readme_img/sonar_code_smell.png" width="90%">
 </p>
 
-
 ### Código limpio + clean architecture
+Como estandar de codificación se hace uso de la guía de clean code de Rober C. Martin aplicada en el lenguage [Python](https://github.com/zedr/clean-code-python).
+
+La aplicación es creada como un módulo del proyecto lo que permite integrar con nuevos componetes a futuro, por ejemplo en el caso que sea de interes dar nuevos formatos o manejar oro tipo de archivos.
+
+A nivel de arquitectura limpia se cumple con el principio de cohesión al trabajar a nivel modular ya que cada componente puede ser desplegado de forma independiente sin afectar a los demás. Se realiza el desarrollo de tal forma en que cada función cumple con tener una responsanbilidad única y se encuentran agrupadas en las vistas dependiendo del objeto que manipulan en su funcionamiento. Otro de los principios aplicados es el de reusar los bloques que se convierten en nuevas funciones de código para evitar duplicados.
+
+Por otra parte, se tiene que la aplicación es independiente la interfaz de usuario. Si esta cambia no afecta a las vistas ni a la parte lógica de la aplicación. Igualmente ocurre con el motor de base de datos usado, este puede cambiarse sin problema ya que usando el orm del framework el modelo no se ve afectado, solo el driver usado para la conexión.
+
+El mantenimiento de la aplicación se facilita gracias a que las funciones tienen una responsabilidad única, las variables estan autoexplicadas y se maneja un grado de complejidad bajo a nivel general. Adicionalmente se cuenta con pruebas unitarias que contemplan los posibles casos y respuestas que puede tener una función.
 
 ### Stack usado
 
@@ -98,7 +106,7 @@ Como **ambiente productivo** y alimentado por la rama main del repositorio de gi
 
 ### Responsive
 
-Gracias al uso de Boostrap se logra un diseño adaptativo usando elementos  como navbar y grid. Adicionalmente para definir el tamaño y la orientación de la hoja de referencia para mostrar la imagen, se hace uso de media queries teniendo como puntos de salto, los definidos por Boostrap para los diferentes dispositivos.
+Gracias al uso de Boostrap se logra un diseño adaptativo usando elementos  como navbar y grid. Adicionalmente para definir el tamaño y la orientación de la hoja de referencia para mostrar la imagen, se hace uso de media queries teniendo como puntos de salto los definidos por Boostrap para los diferentes dispositivos.
 
 * Adaptación usando navbar:
 
@@ -119,25 +127,37 @@ Gracias al uso de Boostrap se logra un diseño adaptativo usando elementos  como
 
 ## Aspectos funcionales 
 
+La aplicación inicia con un formulario para iniciarm ya que se requiere de estar autenticado para su uso. Este formulario brinda la opción de crear una cuenta si se trata de un usuario nuevo.
+
 <p align="center">
 	<img src="readme_img/login_form.png" width="90%">
 </p>
+
+Una vez se inicia sesión, el usuario es redireccionado al home de la aplicación, donde podra ver las funcionalidades disponibles una breve explicación sobre lo que encontrará en esa vista.
 
 <p align="center">
 	<img src="readme_img/home.png" width="90%">
 </p>
 
-<p style = "text-align:center;">
+En la galería se podra encontrar una lista de las imágenes cargadas previamente por el usuario, estas imágenes son miniaturas que presentan a escala la relación de aspecto de la imagen. Para ver la imagen en su tamaño correspondiente y ubicada sobre la plantilla de hoja con formato A4 se debe dar clic sobre ella.
+
+<p align="center">
 	<img src="readme_img/galeria_imagenes.png" width="90%">
 </p>
 
-<p style = "text-align:center;">
+El formulario de carga de imágenes permite realizar cargas por unidad o multiples, realizando las validaciones de tipo de archivo y formato; en caso de no cumplir con estas se recarga el formulario y se muestra un mensaje de error.
+
+<p align="center">
 	<img src="readme_img/carga_multiple.png" width="90%">
 </p>
+
+En caso de que la carga sea múltiple se presentará una vista previa de las imágenes cargadas con exito, puede presentarse el caso en que dentro de un lote alguna de las imágenes no posea el formato solicitado, se procede a rechazarla desplegando un mensaje de error que se muestra en el visualizador, sin interrumpir la carga del resto de las imágenes.
 
 <p align="center">
 	<img src="readme_img/visualizador_imagenes.png" width="90%">
 </p>
+
+Si la carga se realizó con un único archivo se redirecciona inmediatamente al visualizador de imágenes en formato A4 donde se muestra la imagen sobre una plantilla de color gris que representa el tamaño original del formato A4.
 
 <p align="center">
 	<img src="readme_img/visualizador_formatoA4_horizontal_grande.png" width="90%">
@@ -146,6 +166,9 @@ Gracias al uso de Boostrap se logra un diseño adaptativo usando elementos  como
 <p align="center">
 	<img src="readme_img/visualizador_formatoA4_horizontal_pequena.png" width="90%">
 </p>
+
+Para lograr el efecto responsive de la aplicación se realiza un escalado tanto de la plantilla como de las imágenes mediante media queries respetando el aspecto de radio y permitiendo ver en pantalla una representación proporcional de como se visualizaría la imagen sobre la plantilla en el tamaño original.
+
 <p align="center">
 	<img src="readme_img/visualizador_formatoA4_vertical_cuadrado.png" width="40%">
 </p>
