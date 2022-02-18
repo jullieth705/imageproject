@@ -1,18 +1,18 @@
-{% extends "./base.html" %}
+{% include "./header.html" %}
 
 {% block content %} 
-
-{% load crispy_forms_tags %}         
-
-<!--Register--> 
-<div class="container py-5">
-	<h1>Register</h1>
-	<form method="POST">
-		{% csrf_token %}
-		{{ register_form|crispy }}                    
-		<button class="btn btn-primary" type="submit">Register</button>
-	</form>
-	<p class="text-center">If you already have an account, <a href="login">login</a> instead.</p>
-</div>
-
+    {% load crispy_forms_tags %}         
+    <div class="container py-5 form-large">
+        <div class="card bg-light">
+            <div class="card-body">  
+                <h1>Crea una cuenta</h1>
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ register_form|crispy }}                    
+                    <button class="btn btn-primary full-width" type="submit">Crear</button>
+                </form>
+                <p class="text-center mt-3">Si ya tienes una cuenta, <a href="/accounts/login">Inicia sesión</a>.</p>
+            </div>
+        </div>
+    </div>
 {% endblock %}

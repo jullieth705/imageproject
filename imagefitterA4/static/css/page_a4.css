@@ -1,6 +1,7 @@
 
 .horizontal{
     background: lightgray; 
+    padding: 0;
     width: 336.9px;
     height: 238.8px;
 }
@@ -12,6 +13,7 @@
 
 .vertical{
     background: lightgray; 
+    padding: 0;
     width: 318.4px;
     height: 449.2px;
 }
@@ -28,7 +30,7 @@
     }
 
     .horizontal > img{
-        transform: scale(0.3);
+        transform: scale(0.4);
     }
 
     .vertical{
@@ -101,3 +103,5 @@
         transform: scale(1);
     }
 }
+
+

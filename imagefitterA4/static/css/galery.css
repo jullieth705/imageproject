@@ -1,0 +1,15 @@
+.card-size{
+    width: 15rem; 
+    height:15rem;
+}
+
+.card-link{
+    height:100%; 
+    width:100%;
+    display:flex;
+    justify-content: center; 
+}
+
+.card-link > img{
+    max-height:100%;
+}

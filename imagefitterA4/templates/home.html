@@ -1,5 +1,53 @@
 {% include "./header.html" %}
 
 {% block content %}
-    
+	<div class="container py-3">
+		<nav aria-label="breadcrumb py-2">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item active" aria-current="page">Home</li>
+			</ol>
+		</nav>
+		<div class="p-5 mb-4 bg-white rounded-3 border">
+			<div class="container-fluid">
+				<h1 class="display-5 fw-bold">Acerca de</h1>
+				<p class="col-md-12 fs-4 text-justify">
+					Aplicativo encargado de recibir imágenes en formato JPG de cualquier dimensión (Ancho x alto) para ajustarlas
+					a una hoja de hoja tamaño A4 (796 x 1123 pixeles) sin márgenes.
+				</p>
+				<ol class="text-justify">
+					<li>La orientación de la página es definida a partir de la orientación de la imagen (Horizontal/Vertical).</li>
+					<li>La imagen no pierde perder su ratio (Relación de aspecto ancho por alto).</li>
+					<li>Ninguna imagen es agrandada en el proceso, solo encogida cuando corresponda.</li>
+					<li>Se aprovecha el máximo de la hoja A4.</li>
+				</ol>
+				<!-- <button class="btn btn-primary btn-lg" type="button">Acerca de</button> -->
+				<a class="btn btn-outline-secondary" href="/about">Acerca de</a>
+			</div>
+		</div>
+	  
+		<div class="row align-items-md-stretch">
+			<div class="col-md-6 mb-4">
+				<div class="h-100 p-5 text-white bg-dark rounded-3">
+					<h2>Cargar imagen</h2>
+					<p class="text-justify"> 
+						Formulario de carga de imágenes, habilitado para la carga de multiples archivos en formatos jpg o jpeg.
+						Realiza validaciones de formato y extensión. Para la carga múltiple se presenta una visualización previa de 
+						las imagenes cargadas, para luego dar clic y ver la imagen en formato A4.
+					</p>
+					<a class="btn btn-outline-light" href="/upload">Cargar imagen</a>
+				</div>
+			</div>
+			<div class="col-md-6 mb-4">
+				<div class="h-100 p-5 bg-white border rounded-3">
+					<h2>Ver galería</h2>
+					<p class="text-justify">
+						Galería donde se muestran todas las imágenes cargadas por el usuario, estás imágenes se encuentran almacenadas 
+						con las nuevas dimensiones y el nombre definido previamente. Para abrir el visualizador de formato A4 se debe 
+						dar clic en alguna de las imágenes.
+					</p>
+					<a class="btn btn-outline-secondary" href="/galery">Ver galería</a>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}
