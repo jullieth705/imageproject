@@ -172,3 +172,8 @@ Para lograr el efecto responsive de la aplicación se realiza un escalado tanto 
 <p align="center">
 	<img src="readme_img/visualizador_formatoA4_vertical_cuadrado.png" width="40%">
 </p>
+
+## Autor
+
+Erika Julliet Osorio Estrada
+jullieth9111@gmail.com
