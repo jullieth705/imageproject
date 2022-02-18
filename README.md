@@ -1,11 +1,12 @@
 # Proyecto imageproject - prueba técnica imágenes en formato A4
+
 Aplicativo encargado de recibir imágenes en formato JPG de cualquier dimensión (Ancho x alto) para ajustarlas a una hoja de hoja tamaño A4 (796 x 1123 pixeles) sin márgenes. Se cumple con las siguientes reglas:
 * La orientación de la página es definida a partir de la orientación de la imagen (Horizontal/Vertical).
 * La imagen no pierde perder su ratio (Relación de aspecto ancho por alto).
 * Ninguna imagen es agrandada en el proceso, solo encogida cuando corresponda.
 * Se aprovecha el máximo de la hoja A4.
 
-## Aspectos funcionales
+## Aspectos no funcionales
 
 ### Rendimiento y optimización de recursos
 La aplicación almacena en disco la imagen cargada y poseé una base de datos relacional donde se almacena nombre, ruta, dimensiones escaladas y orientación; dando así persistencia a los archivos cargados por el usuario. Las imágenes que se guardan ya poseen el escalado aplicado y así se evita el reprocesamiento al momento de cargar la imagen desde la galería. Respecto a la orientación de la página tambien se toma desde la base de datos para asignar directamente una clase css al div que incluye la imagen.
@@ -29,6 +30,17 @@ Respecto al formulario de carga de imágenes se aplican las siguientes validacio
 ![register_form](readme_img/error_file.png "Mensaje de error de formato")
 
 ### Cobertura de pruebas unitarias
+
+Las pruebas unitarias se implementan usando el módulo **unittest** de Django. Para correr los test se instala la librería **coverage** de python que adicionalmente permite generar reportes y exportar el archivo coverage.xml, que sirve como insumo para calcular el indice de cobertura de pruebas en la herramienta SonarQube; ya que este último solo puede ejecutar test mediante integraciones con otras herramientas.
+
+![run_tests](readme_img/run_tests.png "Consola de test corridos")
+
+Según el reporte de cobertura de pruebas generado por la libreria **coverage**, se tiene una cobertura del 80% sobre el código.
+![coverage_report](readme_img/coverage_report.png "Consola reporte de cobertura")
+
+El porcentaje de cobertura de pruebas presentado por **SonarQube** fue del 79.6%, cuya diferencia puede deberse al redondeo de los decimales, ya que este valor es tomado del reporte contenido en el archivo coverage.xml generado por la librería **coverage**.
+
+![sonar_test_coverage](readme_img/sonar_test_coverage.png "Porcentaje de cobertura de pruebas")
 
 ### Índice de deuda técnica
 
@@ -63,18 +75,22 @@ Revisando el "code smell" reportado por la herramienta, se puede ver que es nece
 
 ### Estrategia de despliegue
 
+Como **ambiente de desarrollo**, se tiene una versión de la aplicación desplegada de manera local (on-premise) accediendo desde la url http://localhost:8000 habilitada con el comando python manage.py runserver. Desde este ambiente se suben los cambios a la rama "erika"  del presente repositorio.
+
+Como **ambiente productivo** y alimentado por la rama main del repositorio de github, se tiene una versión de la aplicación desplegada en un servidor de AWS (cloud), aprovechando la capa gratuita ofrecida por la compañia. Esta puede accederse mediante la url http://ec2-100-24-35-32.compute-1.amazonaws.com:8000 habilitada con el comando python manage.py runserver que corre dentro de un screen o proceso en segundo plano.
+
 ### Responsive
 Gracias al uso de Boostrap se logra un diseño adaptativo usando elementos  como navbar y grid. Adicionalmente para definir el tamaño y la orientación de la hoja de referencia para mostrar la imagen, se hace uso de media queries teniendo como puntos de salto, los definidos por Boostrap para los diferentes dispositivos.
 
-*Adaptación usando navbar:
+* Adaptación usando navbar:
 
 ![menu](readme_img/menu.png "Menú responsive")
 
-*Adaptación usando los media queries:
+* Adaptación usando los media queries:
 
 ![page_a4_responsive](readme_img/page_a4_responsive.png "Página formato A4")
 
-*Adaptación usando grid (clases .col):
+* Adaptación usando grid (clases .col):
 
 ![galery](readme_img/galery.png "Galería responsive")
-## Aspectos no funcionales 
+## Aspectos funcionales 
