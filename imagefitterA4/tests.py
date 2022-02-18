@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.conf import settings
-from .views import fit_image
+from . import views
 
 TEST_FILENAME = 'prueba.jpeg'
 LOGIN_URL = '/accounts/login/'
@@ -67,7 +67,7 @@ class ViewTestCase(TestCase):
 		source.content_type = 'image/jpeg'
 		name = 'prueba'
 		number_file = 0
-		result = fit_image(source, name, number_file)
+		result = views.fit_image(source, name, number_file)
 		self.assertEqual(result, correct_result)
 
 	def test_register_successful(self):
