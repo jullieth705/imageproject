@@ -38,17 +38,15 @@ class SecurityAccessViewsTestCase(TestCase):
 
 class ViewTestCase(TestCase):
 	def setUp(self):
-		self.credentials = {
-			'username': 'testuser',
-			'password': 'secret',
-			'email':'testuser@test.com'}
+		self.credentials = {'username': 'testuser',
+							'password': 'secret',
+							'email':'testuser@test.com'}
 		
-		self.credentials_new_user = {
-			'csrfmiddlewaretoken': ['RbRcj8j9GuIktQLK8Qdt5HHZqh24CqjJfpiYoNwKJyaXuJY0VYl5KBeYfe7ZK56H'], 
-			'username': ['testuser2'], 
-			'email': ['testuser2@gmail.com'], 
-			'password1': ['secret'], 
-			'password2': ['secret']}
+		self.credentials_new_user = {'csrfmiddlewaretoken': ['RbRcj8j9GuIktQLK8Qdt5HHZqh24CqjJfpiYoNwKJyaXuJY0VYl5KBeYfe7ZK56H'], 
+									'username': ['testuser2'], 
+									'email': ['testuser2@gmail.com'], 
+									'password1': ['secret'], 
+									'password2': ['secret']}
 
 		User.objects.create_user(**self.credentials)
 
@@ -61,10 +59,10 @@ class ViewTestCase(TestCase):
 
 	
 	def test_fit_image_succesful(self):
-		correct_result = {	'path': settings.IMAGE_URL + TEST_FILENAME,
-							'orientation': 'horizontal',
-							'dimensions':  '797X796',
-							'name': 'prueba'}
+		correct_result = {'path': settings.IMAGE_URL + TEST_FILENAME,
+						'orientation': 'horizontal',
+						'dimensions':  '797X796',
+						'name': 'prueba'}
 		source = SimpleUploadedFile(TEST_FILENAME, open(self.get_valid_file(), 'rb').read())
 		source.content_type = 'image/jpeg'
 		name = 'prueba'
