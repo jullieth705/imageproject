@@ -8,12 +8,42 @@ Aplicativo encargado de recibir imágenes en formato JPG de cualquier dimensión
 ## Aspectos funcionales
 
 ### Rendimiento y optimización de recursos
+La aplicación almacena en disco la imagen cargada y poseé una base de datos relacional donde se almacena nombre, ruta, dimensiones escaladas y orientación; dando así persistencia a los archivos cargados por el usuario. Las imágenes que se guardan ya poseen el escalado aplicado y así se evita el reprocesamiento al momento de cargar la imagen desde la galería. Respecto a la orientación de la página tambien se toma desde la base de datos para asignar directamente una clase css al div que incluye la imagen.
 
 ### Seguridad
+
+A nivel de seguridad se restringe el uso de la aplicación solo para usuarios registrados, donde unicamente tendrán acceso a su colección de imágenes personal. Para esto se desarrolla un sistema de autenticación y se restringe el acceso a las vistas mediante decoradores y redireccionamiento automático al formulario de inicio de sesión cuando se intenta acceder directamente por URL. Por ejemplo, al intentar acceder a la URL http://ec2-100-24-35-32.compute-1.amazonaws.com:8000/upload para ingresar al formulario de carga de imágenes, el usuario que no ha iniciado sesión sera redireccionado a la URL http://ec2-100-24-35-32.compute-1.amazonaws.com:8000/accounts/login/?next=/upload
+
+![login_form](readme_img/login_form.png "Formulario de inicio de sesión")
+
+Se agrega el formulario de registro para otorgar acceso a la aplicación de usuarios nuevos.
+
+![register_form](readme_img/register_form.png "Formulario de creación de cuenta")
+
+Respecto al formulario de carga de imágenes se aplican las siguientes validaciones para evitar el ingreso de archivos no permitidos:
+
+* validación de tipo de archivo: solo se permiten imágenes por lo que cualquier archivo de tipo diferente que intente ser cargado lanzará mensaje de error.
+
+* validación de formato: solo se permiten imágenes formato jpg o jpeg, por lo que cualquier archivo de diferente formato cargado lanzará mensaje de error. Cabe resaltar que el formato del archivo es diferente a la extensión del mismo, para está aplicación se hizo la prueba de cambiar la extension de un archivo de .png a .jpg obteniendo un resultado exitoso al rechazar este archivo corrupto.
+
+![register_form](readme_img/error_file.png "Mensaje de error de formato")
 
 ### Cobertura de pruebas unitarias
 
 ### Índice de deuda técnica
+
+[SonarQube](https://www.sonarqube.org/) es una plataforma de software libre para evaluar la calidad del código fuente, realizando un análisis estático sobre dicho código, con el objetivo de informar sobre diferentes puntos a mejorar.
+
+Esta plataforma define un ratio de deuda tecnica usando la metodología SQALE (Software Quality Assessment based on Lifecycle Expectations) que se basa en bloques duplicados de código, las pruebas unitarias falladas, ramas cubiertas por las pruebas unitarias insuficientes, densidad de comentarios insuficientes, cobertura de líneas cubierta por pruebas unitarias insuficientes y pruebas unitarias omitidas.
+
+![sonar](readme_img/sonar.png "Estadisticas SonarQube")
+
+Se obtiene una calificación del SQALE Rating en A, significando que el ratio de deuda técnica es menor al 10%, por lo que se puede considerar que el proyecto se encuentra saludable.  
+
+Revisando el "code smell" reportado por la herramienta, se puede ver que es necesaria una refactorización de la función **upload** ya que posee un grado de complejidad superior al definido en los parametros de evaluación recomendados; el grado de complejidad aumenta conforme aparezcan estructuras condicionales y cíclicas dentro del método por lo que una posible solución sería reevaluar si es estrictamente necesario el uso de estas estructuras o crear nuevas funciones con complejidad inferior para ser llamadas desde upload.
+
+![sonar_code_smell](readme_img/sonar_code_smell.png "Estadisticas SonarQube")
+
 
 ### Código limpio + clean architecture
 
@@ -27,9 +57,9 @@ Aplicativo encargado de recibir imágenes en formato JPG de cualquier dimensión
 
 * [Django](https://www.djangoproject.com/) - Es un framework web de alto nivel que permite el desarrollo rápido de sitios web seguros y mantenibles. Es gratuito y de código abierto, tiene una comunidad amplia y activa. Es modular lo que facilita la escalabilidad. Permite usar todos los paquetes disponibles de python.
 
-* [Boostrap](https://getbootstrap.com/) - Uno de los frameworks más populares a nivel de front end. Permite crear interfaces web con CSS y Javascript que se adaptan en función del tamaño de la pantalla. Facilita plantillas, fuentes, botones y elementos de navegación.
-
 * [Pillow](https://pillow.readthedocs.io/en/stable/) - Es una biblioteca gratuita de Python que agrega soporte para abrir, manipular y guardar muchos formatos de archivos de imágenes diferentes. Esta posee el método thumbnail() que permite redimensionar una imagen sin perder su relación de aspecto.
+
+* [Boostrap](https://getbootstrap.com/) - Uno de los frameworks más populares a nivel de front end. Permite crear interfaces web con CSS y Javascript que se adaptan en función del tamaño de la pantalla. Facilita plantillas, fuentes, botones y elementos de navegación.
 
 ### Estrategia de despliegue
 
