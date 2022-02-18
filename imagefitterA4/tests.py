@@ -7,7 +7,7 @@ from .views import fit_image
 TEST_FILENAME = 'prueba.jpeg'
 LOGIN_URL = '/accounts/login/'
 
-class AccessTestCase(TestCase):
+class SecurityAccessViewsTestCase(TestCase):
 	def test_login_loads_properly(self):
 		response = self.client.get(LOGIN_URL)
 		self.assertEqual(response.status_code, 200)
