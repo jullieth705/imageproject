@@ -97,6 +97,7 @@ Como **ambiente de desarrollo**, se tiene una versión de la aplicación despleg
 Como **ambiente productivo** y alimentado por la rama main del repositorio de github, se tiene una versión de la aplicación desplegada en un servidor de AWS (cloud), aprovechando la capa gratuita ofrecida por la compañia. Esta puede accederse mediante la url http://ec2-100-24-35-32.compute-1.amazonaws.com:8000 habilitada con el comando python manage.py runserver que corre dentro de un screen o proceso en segundo plano.
 
 ### Responsive
+
 Gracias al uso de Boostrap se logra un diseño adaptativo usando elementos  como navbar y grid. Adicionalmente para definir el tamaño y la orientación de la hoja de referencia para mostrar la imagen, se hace uso de media queries teniendo como puntos de salto, los definidos por Boostrap para los diferentes dispositivos.
 
 * Adaptación usando navbar:
@@ -115,6 +116,7 @@ Gracias al uso de Boostrap se logra un diseño adaptativo usando elementos  como
 <p align="center">
 	<img src="readme_img/galery.png" width="40%">
 </p>
+
 ## Aspectos funcionales 
 
 <p align="center">
